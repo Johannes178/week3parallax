@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parallax</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        html, body{
+            margin: 0;
+            padding: 0;
+            background-color: black;
+        }
+        #hero {
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        .layer{
+            backround-position: bottom center;
+            background-repeat: no-repeat;
+            background-size: auto;
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            /*position: relative;
+            background-attachment: fixed;*/
+        }
+        .layer1 { background-image: url("ilu_01.jpg");}
+        .layer2 { background-image: url("ilu_02.png");}
+        .layer3 { background-image: url("ilu_03.png");}
+        .layer4 { background-image: url("ilu_04.png");}
+        .layer5 { background-image: url("ilu_05.png");}
+        .layer6 { background-image: url("ilu_06.png");}
+
+        main {
+            color: white;
+            padding: 30px;
+            position: relative;
+            z-index: 100;
+            background-color: black;
+            }
+        #spacecat{
+            width: 100%;
+            height: calc(100vh - 30px);
+            background-color: blueviolet;
+            background-image: url("/ISS-40.jpg");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            position: relative;
+            overflow: hidden;
+        }
+        .astronaut{
+            position: absolute;
+            top: 0;
+	        left: 0;
+            background-image: url("astronaut.png");
+            z-index:4;
+            width: 225px;
+            height: 211px;
+        }
+
+        .shuttle{
+	        position: absolute;
+	        top: 0;
+	        left: 0;
+	        background-image: url("shuttle.png");
+	        z-index:4;
+	        width: 500px;
+	        height: 496px;
+        }
+
+        #mouse, #mouse-center{
+            color: white;
+            border: 1px solid white;
+            width: 200px;
+            right: 20px;
+            z-index: 3;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="hero">
+    <!-- position fixed -->
+    <div class="layer layer1" data-type="parallax" data-speed="5"></div>
+    <div class="layer layer2" data-type="parallax" data-speed="20"></div>
+    <div class="layer layer3" data-type="parallax" data-speed="40"></div>
+    <div class="layer layer4" data-type="parallax" data-speed="60"></div>
+    <div class="layer layer5" data-type="parallax" data-speed="80"></div>
+    <div class="layer layer6" data-type="parallax" data-speed="100"></div>
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                               </div>
+<main>
+    <h1>hieno</h1>
+    <p>lorem ipsum blablabla tämä on hieno parallax sivustolorem ipsum blablabla tämä on
+        hieno parallax sivustolorem ipsum blablabla tämä on hieno parallax sivustolorem ipsum
+        blablabla tämä on hieno parallax sivustolorem ipsum blablabla tämä on hieno parallax
+        sivustolorem ipsum blablabla tämä on hieno parallax sivustolorem ipsum blablabla tämä on
+        hieno parallax sivustolorem ipsum blablabla tämä on hieno parallax sivustolorem ipsum
+        blablabla tämä on hieno parallax sivustolorem ipsum blablabla tämä on hieno parallax
+        sivustolorem ipsum blablabla tämä on hieno parallax sivustolorem ipsum blablabla tämä
+        on hieno parallax sivustolorem ipsum blablabla tämä on hieno parallax sivustolorem ipsum
+        blablabla tämä on hieno parallax sivustolorem ipsum blablabla tämä on hieno parallax sivustolorem
+        ipsum blablabla tämä on hieno parallax sivustolorem ipsum blablabla tämä on hieno parallax
+        sivustolorem ipsum blablabla tämä on hieno parallax sivustolorem ipsum blablabla tämä on hieno
+        parallax sivustolorem ipsum blablabla tämä on hieno parallax sivustolorem ipsum blablabla tämä
+        on hieno parallax sivustolorem ipsum blablabla tämä on hieno parallax sivustolorem ipsum blablabla
+        tämä on hieno parallax sivustolorem ipsum blablabla tämä on hieno parallax sivusto</p>
+
+    <h1>spacecat</h1>
+
+ <!-- position relative -->
+    <div id="spacecat">
+        <!-- position absolute -->
+        <div class="astronaut"></div>
+        <div class="shuttle"></div>
+        <div id="mouse"></div>
+        <div id="mouse-center"></div>
+    </div>
+</main>
+<script>
+    window.addEventListener("scroll", (evt) => {
+
+
+      let topDistance = this.pageYOffset;
+
+      console.log(topDistance);
+
+     const layers = document.querySelector("[data-type='parallax']")
+     let layer, speed, yPos;
+      for (let i = 0; i < layers.length; i++) {
+        layer = layers[i];
+        speed = layer.getAttribute('data-speed');
+        let yPos = -(topDistance * speed / 100);
+        layer.setAttribute('style', 'transform: translate3d(0px, ' + yPos + 'px, 0px)');
+      }
+    });
+
+
+    const spacecat = document.querySelector('#spacecat');
+    const mouseleftbox = document.querySelector('#mouse');
+    const mousecenterbox = document.querySelector('#mouse-center');
+    const astronaut = document.querySelector('.astronaut')
+    const shuttle = document.querySelector('.shuttle')
+
+
+
+
+    document.addEventListener('mousemove', (evt) => {
+
+    //keskipisteen laskeminen
+
+    let cx = spacecat.clientWidth/2;
+    let cy = spacecat.clientHeight/2;
+
+      console.log(evt);
+
+      let mouseX = evt.clientX,
+          mouseY = evt.clientY;
+
+      let mouseposition = `vasen kulma <br> x: ${mouseX} ja y: ${mouseY}`;
+      mouseleftbox.innerHTML = mouseposition;
+
+      let from_center_x = cx - mouseX;
+      let from_center_y = cy - mouseY;
+
+      let mousecenterposition = `keskeltä <br> x: ${from_center_x} ja y: ${from_center_y}`;
+      mousecenterbox.innerHTML = mousecenterposition;
+
+      astronaut.style.transform = 'translateX(' + from_center_x/10 + '%)translateY(' + from_center_y/10;
+      shuttle.style.transform = 'translateX(' + from_center_x/350 + '%)translateY(' + from_center_y/350;
+
+
+    });
+
+</script>
+</body>
+</html>
